@@ -2,12 +2,19 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @StateObject var weatherModel = WeatherModel()
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             TabView {
                 LocationsView()
                     .tabItem {
                         Label("Locations", image: "location")
+                    }
+                
+                Forecast(weatherModel: weatherModel)
+                    .tabItem {
+                        Label("Forecast", systemImage: "chart.bar.fill")
                     }
                 
                 SettingsView()
