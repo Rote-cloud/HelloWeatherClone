@@ -6,9 +6,10 @@ struct Post: Codable {
     var message: Int
     var cnt: Int
     var list: [Weather]
+    var city: City
     
     static func empty() -> Post {
-            Post(cod: "", message: 0, cnt: 0, list: [Weather()])
+            Post(cod: "", message: 0, cnt: 0, list: [], city: City())
         }
 }
 
@@ -20,6 +21,7 @@ struct Weather: Codable {
     var wind: WeatherWind
     var visibility: Int
     var pop: Double
+    var snow: [String: Double]?
     var rain: [String: Double]?
     var sys: WeatherPod
     var dt_txt: String
@@ -35,17 +37,6 @@ struct Weather: Codable {
         //rain = ["3h" : 0]
         sys = WeatherPod()
         dt_txt = ""
-    }
-    
-    func getParam() -> [String: Double] {
-        var dict: [String: Double] = [:]
-        dict["temp"] = main.temp
-        dict["feels_like"] = main.feels_like
-        dict["speed"] = wind.speed
-        dict["visibility"] = Double(visibility)
-        dict["humidity"] = Double(main.humidity)
-        
-        return dict
     }
 }
 
@@ -130,5 +121,27 @@ struct AverageWeather: Codable {
         icon = ""
         visibility = 0
         humidity = 0
+    }
+}
+
+struct City: Codable {
+    var id: Int
+    var name: String
+    var coord: WeatherCoord
+    var country: String
+    var population: Int
+    var timezone: Int
+    var sunrise: Int
+    var sunset: Int
+    
+    init() {
+        id = 0
+        name = ""
+        coord = WeatherCoord()
+        country = ""
+        population = 0
+        timezone = 0
+        sunrise = 0
+        sunset = 0
     }
 }

@@ -4,7 +4,7 @@ import CoreLocation
 final class WeatherModel: ObservableObject {
     @Published var weather = Post.empty().list
     @Published var weatherCity = PostCity.empty()
-    public var city = "Omsk" {
+    private var city = "Omsk" {
         didSet {
             getLocationCity()
         }
@@ -12,6 +12,18 @@ final class WeatherModel: ObservableObject {
     
     init() {
             getLocationCity()
+    }
+    
+    public func setCity(city: String) {
+        if city != "Your current location" {
+            self.city = city
+        } else {
+            self.city = "Omsk"
+        }
+    }
+    
+    public func getCity() -> String {
+        return city
     }
     
     private func getLocationCity() {
@@ -72,7 +84,62 @@ final class WeatherModel: ObservableObject {
             }
         }
     
-    func getDay(weather: Weather) -> String {
+    func getOneDayWeather() -> [Weather] {
+        var arrayWeather: [Weather] = []
+        
+        for index in 0..<8 {
+                if index < weather.count {
+                    arrayWeather.append(weather[index])
+                }
+            }
+        
+        return arrayWeather
+    }
+    
+    func getWeatherSeveralDays() -> [Weather] {
+        var arrayWeather: [Weather] = []
+        
+        if !weather.isEmpty {
+            var nowDay = WeatherModel.getDay(weather: weather.first!)
+            
+            for w in weather {
+                let day = WeatherModel.getDay(weather: w)
+                if day != nowDay && WeatherModel.getHour(weather: w) == "12pm"  {
+                    arrayWeather.append(w)
+                    nowDay = day
+                }
+            }
+        }
+        
+        return arrayWeather
+    }
+    
+    func getHighTemp() -> Int {
+        if !weather.isEmpty {
+            let arrayWeather = self.getWeatherSeveralDays()
+            var temp = 0
+            for w in arrayWeather {
+                temp = max(temp, Int(w.main.temp))
+            }
+            
+            return temp
+        }
+        
+        return 0
+    }
+    
+    static func getBadWeatherPercent(weather: Weather) -> Int {
+        if let snow = weather.snow?.values.first {
+            return Int(snow * 100)
+        }
+        if let rain = weather.rain?.values.first {
+            return Int(rain * 100)
+        }
+        
+        return 0
+    }
+    
+    static func getDay(weather: Weather) -> String {
         let format = DateFormatter()
         format.dateFormat = "yyyy-MM-dd HH:mm:ss"
         guard let date = format.date(from: weather.dt_txt) else {
@@ -83,79 +150,70 @@ final class WeatherModel: ObservableObject {
         return day
     }
     
-    func getHour(weather: Weather) -> String {
+    static func getHour(weather: Weather) -> String {
         let format = DateFormatter()
         format.dateFormat = "yyyy-MM-dd HH:mm:ss"
         guard let date = format.date(from: weather.dt_txt) else {
             return ""
         }
-        format.dateFormat = "HH:mm"
+        format.dateFormat = "ha"
         let hour = format.string(from: date)
-        return hour
+        return hour.lowercased()
     }
     
-    func getDayOfWeek(weather: Weather) -> String {
+    static func getDayOfWeek(weather: Weather) -> String {
         let format = DateFormatter()
         format.dateFormat = "yyyy-MM-dd HH:mm:ss"
         guard let date = format.date(from: weather.dt_txt) else {
             return ""
         }
-
-        let calendar = Calendar.current
-        let weekday = calendar.component(.weekday, from: date)
-        let weekdaySymbols = calendar.weekdaySymbols
-        return weekdaySymbols[weekday - 1]
+        format.dateFormat = "E"
+        let dayOfWeek = format.string(from: date)
+        return dayOfWeek.uppercased()
     }
     
-    func getHourAndMinute(time: Int) -> String {
+    static func getHourAndMinute(time: Int) -> String {
         let date = Date(timeIntervalSince1970: TimeInterval(time))
         let calendar = Calendar.current
 
         let components = calendar.dateComponents([.hour, .minute], from: date)
         if let _ = components.hour, let _ = components.minute {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "hh:mm"
+            dateFormatter.dateFormat = "h:mma"
             
             let formattedTime = dateFormatter.string(from: date)
-            return formattedTime
+            return formattedTime.lowercased()
         }
         return ""
     }
     
-    public func getWeather() -> [Weather]{
-        return weather
+    static func getDayLight(weatherCity: PostCity) -> String {
+        let time = weatherCity.sys.sunset - weatherCity.sys.sunrise
+        return "\(time / 3600):\(time % 3600 / 60)"
     }
     
-    public func getWeatherCity() -> PostCity {
-        return weatherCity
-    }
-    
-    func getWeatherIcon(icon: String) -> String {
+    static func getWeatherIcon(icon: String) -> String {
             switch icon {
                 case "01d":
                     return "sun"
                 case "01n":
                     return "moon"
-                case "02d":
-                    return "cloudSun"
-                case "02n":
-                    return "cloudMoon"
-                case "03d", "04d":
+                case "02d", "03d", "04d":
                     return "cloudy"
-                case "03n", "04n":
+                case "02n", "03n", "04n":
                     return "cloudMoon"
-                case "09d", "09n", "10d", "10n":
+                case "09d", "10d":
                     return "rainy"
+                case "09n", "10n":
+                    return "rainyNight"
                 case "11d":
                     return "stormDay"
                 case "11n":
                     return "stormNight"
-                case "13d", "13n":
+                case "13d":
                     return "snowy"
-                case "50d":
-                    return "tornadoDay"
-                case "50n":
-                    return "tornadoNight"
+                case "13n":
+                    return "snowyNight"
                 default:
                     return "sun"
             }

@@ -7,7 +7,7 @@ struct ContentView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             TabView {
-                LocationsView()
+                LocationsView(weatherModel: weatherModel)
                     .tabItem {
                         Label("Locations", image: "location")
                     }

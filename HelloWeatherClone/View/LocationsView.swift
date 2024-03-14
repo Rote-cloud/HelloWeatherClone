@@ -1,6 +1,21 @@
 import SwiftUI
 
+struct LocationInfo: Identifiable {
+    var id = UUID()
+    var imageNmae = "text.justify"
+    var text: String
+    var image2: String?
+}
+
 struct LocationsView: View {
+    
+    @StateObject var weatherModel: WeatherModel
+    
+    @State private var location = [LocationInfo(imageNmae: "target", text: "Your current location"),
+    LocationInfo(text: "New York, New York", image2: "xmark"),
+    LocationInfo(text: "Chicago", image2: "xmark"),
+    LocationInfo(text: "Moscow", image2: "xmark")]
+    
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -22,40 +37,58 @@ struct LocationsView: View {
             Divider()
             
             ScrollView {
-                Location(imageName: "target", text: "Your current location", image2: nil)
-                Location(imageName: "text.justify", text: "New York, New York", image2: "xmark")
+                ForEach(location) { location in
+                    Location(weatherModel: weatherModel, location: location) {
+                        deleteLoc(location)
+                    }
+                }
+                .onDelete(perform: deleteLocs)
+
             }
             .navigationTitle("Locations")
             .padding([.bottom, .horizontal])
         }
     }
+    
+    private func deleteLoc(_ loc: LocationInfo) {
+            if let index = location.firstIndex(where: { $0.text == loc.text }) {
+                location.remove(at: index)
+            }
+        }
+
+
+    private func deleteLocs(at offsets: IndexSet) {
+            location.remove(atOffsets: offsets)
+        }
+
+
 }
 
 struct Location: View {
     
-    let imageName: String
-    let text: String
-    let image2: String?
+    let weatherModel: WeatherModel
+    let location: LocationInfo
+    let onDelete: () -> Void
     
     var body: some View {
         HStack {
             Button {
+                weatherModel.setCity(city: location.text)
             } label: {
                 HStack {
-                    Image(systemName: imageName)
+                    Image(systemName: location.imageNmae)
                         .font(.system(size: 20))
                         .foregroundColor(.black)
-                    Text(text)
+                    Text(location.text)
                         .foregroundColor(.black)
                 }
             }
             
             Spacer()
             
-            Button {
-                
-            } label: {
-                if let image = image2 {
+            Button(action: onDelete)
+            {
+                if let image = location.image2 {
                     Image(systemName: image)
                         .foregroundColor(.black)
                 }
@@ -66,5 +99,5 @@ struct Location: View {
 }
 
 #Preview {
-    LocationsView()
+    LocationsView(weatherModel: WeatherModel())
 }
