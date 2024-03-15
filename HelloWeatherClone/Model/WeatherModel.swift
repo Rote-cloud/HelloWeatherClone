@@ -143,6 +143,12 @@ final class WeatherModel: ObservableObject {
         }
     }
     
+    static func nowNight(time: PostCity) -> Bool {
+        let date = Int(Date().timeIntervalSince1970)
+        
+        return date >= time.sys.sunset || date < time.sys.sunrise
+    }
+    
     static func getBadWeatherPercent(weather: Weather) -> Int {
         if let snow = weather.snow?.values.first {
             return Int(snow * 100)

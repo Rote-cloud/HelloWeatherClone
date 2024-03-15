@@ -25,14 +25,14 @@ struct DiagramVerticalView: View {
             ZStack(alignment: .trailing) {
                 Rectangle()
                     .frame(width: badWeather > 0 ? CGFloat(Sizes.sizeBadWeather + badWeather) : 0, height: Sizes.sizeBaseHistogram)
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color("blues"))
                     .clipShape(
                         RoundCornerShape(rect: CGRect(x: 0, y: 0, width: Sizes.sizeBaseHistogram, height: (badWeather > 0 ? CGFloat(Sizes.sizeBadWeather + badWeather) : 0)), byRoundingCorners: [.topLeft, .bottomLeft], cornerRadii: CGSize(width: Sizes.cornerRadius5, height: Sizes.cornerRadius5))
                     )
                 HStack {
                     if badWeather != 0 {
                         Text("\(badWeather)%")
-                            .foregroundColor(.white)
+                            .foregroundColor(Color("histoColor"))
                             .font(Fonts.boldText)
                             .padding(.leading, Sizes.paddingSmall)
                     }
@@ -58,19 +58,19 @@ struct DiagramVerticalView: View {
             ZStack(alignment: .leading) {
                 Rectangle()
                     .frame(width: Double(Sizes.sizeBadWeather) + (temp > 0 ? temp : 0), height: Sizes.sizeBaseHistogram)
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color("blues"))
                     .clipShape(
                         RoundCornerShape(rect: CGRect(x: 0, y: 0, width: Sizes.sizeBaseHistogram, height: Double(Sizes.sizeBadWeather) + (temp > 0 ? temp : 0)), byRoundingCorners: [.bottomRight, .topRight], cornerRadii: CGSize(width: Sizes.cornerRadius5, height: Sizes.cornerRadius5))
                     )
                 HStack {
                     Text("\(feels_like)&deg;")
-                        .foregroundColor(.white)
+                        .foregroundColor(Color("histoColor"))
                         .font(Fonts.boldText)
                         .frame(width: Sizes.sizeBaseHistogram, height: Sizes.sizeBaseHistogram)
-                        .background(Color(red: 2 / 255, green: 140 / 255, blue: 1))
+                        .background(Color("lightBlue"))
                     Spacer()
                     Text("\(Int(temp))&deg;")
-                        .foregroundColor(.white)
+                        .foregroundColor(Color("histoColor"))
                         .font(Fonts.boldText)
                         .padding(.trailing, Sizes.paddingSmall)
                 }

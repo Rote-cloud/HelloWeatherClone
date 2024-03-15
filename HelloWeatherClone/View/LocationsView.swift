@@ -18,6 +18,7 @@ struct LocationsView: View {
             HStack {
                 Text("Locations")
                     .font(Fonts.titleText)
+                    .foregroundColor(.primary)
                 
                 Spacer()
                 
@@ -25,7 +26,7 @@ struct LocationsView: View {
                     showModal = true
                     searchValue = ""
                 } label: {
-                    Image(systemName: "plus")                        .foregroundColor(.black)
+                    Image(systemName: "plus")                        .foregroundColor(.primary)
                 }
                 .sheet(isPresented: $showModal, onDismiss: {
                         }) {
@@ -38,7 +39,7 @@ struct LocationsView: View {
                                         Image(systemName: "chevron.left")
                                             .imageScale(.large)
                                     }
-                                    TextField("Введите город", text: $searchValue)
+                                    TextField("Enter city", text: $searchValue)
                                         .textFieldStyle(RoundedBorderTextFieldStyle())
                                         .padding()
                                             
@@ -53,11 +54,11 @@ struct LocationsView: View {
                                             })
                                         })
                                     }) {
-                                        Text("Готово")
+                                        Text("Add City")
                                     }
-                                    .padding()
                                             
                                 }
+                                .padding()
                                 Spacer()
                             }
 
@@ -115,9 +116,9 @@ struct Location: View {
                 HStack {
                     Image(systemName: location.imageName)
                         .font(Fonts.sizeImageLocation)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                     Text(location.text)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                 }
             }
             
@@ -127,7 +128,7 @@ struct Location: View {
             {
                 if let image = location.image2 {
                     Image(systemName: image)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                 }
             }
         }

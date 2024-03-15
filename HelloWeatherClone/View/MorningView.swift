@@ -42,19 +42,19 @@ struct DiagramView: View {
             ZStack(alignment: .top) {
                 Rectangle()
                     .frame(width: Sizes.sizeBaseHistogram, height: Sizes.sizeMinHistogram + (temp > 0 ? temp : 0))
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color("blues"))
                     .clipShape(
                         RoundCornerShape(rect: CGRect(x: 0, y: 0, width: Sizes.sizeBaseHistogram, height: Sizes.sizeMinHistogram + (temp > 0 ? temp : 0)), byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: Sizes.cornerRadius5, height: Sizes.cornerRadius5))
                     )
                 VStack {
                     Text("\(Int(temp))&deg;")
-                        .foregroundColor(.white)
+                        .foregroundColor(Color("histoColor"))
                         .font(Fonts.subtitleText)
                         .padding(.top, Sizes.paddingSmall)
                     Spacer()
                     Text("\(feels_like)&deg;")
                         .font(Fonts.sizeSmallText)
-                        .foregroundColor(.white)
+                        .foregroundColor(Color("histoColor"))
                         .padding(.bottom, Sizes.paddingSmall)
                 }
             }

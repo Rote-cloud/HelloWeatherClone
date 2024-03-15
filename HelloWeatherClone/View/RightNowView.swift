@@ -71,7 +71,7 @@ struct Param: View {
                 Image(systemName: "arrow.right.circle.fill")
                     .resizable()
                     .frame(width: Sizes.sizeSmallIcon, height: Sizes.sizeSmallIcon)
-                    .foregroundColor(.purple)
+                    .foregroundColor(Color("violet"))
                 Text("\(Int(weatherCity.wind.speed))mph winds. Visibility \(weatherCity.visibility)+ meters")
             }
             

@@ -27,11 +27,13 @@ struct ContentView: View {
                     }
                     .tag(2)
             }
+            .accentColor(Color("blues"))
             .environmentObject(tabSelection)
 
             Divider()
                 .padding(.bottom, Sizes.paddingBottomDivider)
         }
+        .preferredColorScheme(WeatherModel.nowNight(time: weatherModel.weatherCity) ? .dark : .light)
     }
 }
 

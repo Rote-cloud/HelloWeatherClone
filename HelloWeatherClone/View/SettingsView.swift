@@ -5,6 +5,7 @@ struct SettingsView: View {
         VStack(alignment: .leading) {
             Text("Settings")
                 .font(Fonts.titleText)
+                .foregroundColor(.primary)
                 .padding(.horizontal)
                 .padding(.bottom, Sizes.paddingSmall)
             Divider()
@@ -15,6 +16,7 @@ struct SettingsView: View {
                             HStack {
                     Text("DISPLAY OPTIONS")
                         .font(Fonts.subtitleText)
+                        .foregroundColor(.primary)
                     Spacer()
                 }
                 ){
@@ -28,6 +30,7 @@ struct SettingsView: View {
                             HStack {
                     Text("EXCLUSIVE EXTRAS")
                         .font(Fonts.subtitleText)
+                        .foregroundColor(.primary)
                     Spacer()
                 }
                 ){
@@ -41,6 +44,7 @@ struct SettingsView: View {
                             HStack {
                     Text("HAVE A QUESTION OR NEED HELP?")
                         .font(Fonts.subtitleText)
+                        .foregroundColor(.primary)
                     Spacer()
                 }
                 ){
@@ -54,6 +58,7 @@ struct SettingsView: View {
                             HStack {
                     Text("A FEW OTHER TIDBITS")
                         .font(Fonts.subtitleText)
+                        .foregroundColor(.primary)
                     Spacer()
                 }
                 ){
@@ -90,7 +95,7 @@ struct SettingChapter: View {
                     .font(Fonts.sizeImageLocation)
                     .frame(width: Sizes.sizeIconSettings)
                 Text(text)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
                 
                 Spacer()
                 

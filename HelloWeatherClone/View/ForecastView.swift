@@ -22,10 +22,10 @@ struct Forecast: View {
                 }
             }
             .padding(.horizontal)
-            .foregroundColor(.blue)
+            .foregroundColor(Color("blues"))
             
             Divider()
-                .overlay(.blue)
+                .overlay(Color("blues"))
                 .padding(.horizontal)
             
             ScrollView {
@@ -39,12 +39,12 @@ struct Forecast: View {
                         Text("Join the Hello Weather fan club →")
                     }
                     .padding(Sizes.paddingSmall)
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .buttonStyle(.bordered)
+                    .background(Color("violet"))
+                    .foregroundColor(.white)
+                    .cornerRadius(Sizes.cornerRadius10)
                 }
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .buttonStyle(.bordered)
-                .background(.purple)
-                .foregroundColor(.white)
-                .cornerRadius(Sizes.cornerRadius10)
                 
                 MorningView(weatherModel: weatherModel)
                 
@@ -65,7 +65,7 @@ struct Forecast: View {
                 .padding()
                 .overlay(
                     RoundedRectangle(cornerRadius: Sizes.cornerRadius10)
-                        .stroke(.blue, lineWidth: 1)
+                        .stroke(Color("blues"), lineWidth: 1)
                 )
                 
                 Button {
