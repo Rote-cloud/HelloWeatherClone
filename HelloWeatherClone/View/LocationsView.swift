@@ -17,8 +17,7 @@ struct LocationsView: View {
         VStack(alignment: .leading) {
             HStack {
                 Text("Locations")
-                    .bold()
-                    .font(.system(size: 20))
+                    .font(Fonts.titleText)
                 
                 Spacer()
                 
@@ -65,7 +64,7 @@ struct LocationsView: View {
                         }
             }
             .padding(.horizontal)
-            .padding(.bottom, 5)
+            .padding(.bottom, Sizes.paddingSmall)
             
             Divider()
             
@@ -78,7 +77,6 @@ struct LocationsView: View {
                 .onDelete(perform: deleteLocs)
 
             }
-            .navigationTitle("Locations")
             .padding([.bottom, .horizontal])
         }
         .alert(isPresented: $isCityBool) {
@@ -116,7 +114,7 @@ struct Location: View {
             } label: {
                 HStack {
                     Image(systemName: location.imageName)
-                        .font(.system(size: 20))
+                        .font(Fonts.sizeImageLocation)
                         .foregroundColor(.black)
                     Text(location.text)
                         .foregroundColor(.black)

@@ -7,16 +7,15 @@ struct RightNowView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("Right now")
-                .bold()
-                .font(.title)
-                .padding(.bottom, -10)
+                .font(Fonts.titleTextForecast)
+                .padding(.bottom, Sizes.padding_10Bottom)
             
             TabView {
                 Cloudy(weatherCity: weatherModel.weatherCity)
                 
                 Param(weatherCity: weatherModel.weatherCity)
             }
-            .frame(height: 190)
+            .frame(height: Sizes.rightNowHeight)
             .tabViewStyle(.page)
             .indexViewStyle(.page(backgroundDisplayMode: .always))
             
@@ -45,11 +44,10 @@ struct Cloudy: View {
             HStack {
                 Image(iconName)
                     .resizable()
-                    .frame(width: 120, height: 120)
+                    .frame(width: Sizes.sizeBigImage, height: Sizes.sizeBigImage)
                 VStack {
                     Text("\(temp)&deg;")
-                        .font(.system(size: 50))
-                        .bold()
+                        .font(Fonts.tempRightNow)
                     Text("Feels like \(feels_like)&deg;")
                         .foregroundStyle(.gray)
                 }
@@ -68,11 +66,11 @@ struct Param: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: Sizes.spacingAverage) {
             HStack {
                 Image(systemName: "arrow.right.circle.fill")
                     .resizable()
-                    .frame(width: 30, height: 30)
+                    .frame(width: Sizes.sizeSmallIcon, height: Sizes.sizeSmallIcon)
                     .foregroundColor(.purple)
                 Text("\(Int(weatherCity.wind.speed))mph winds. Visibility \(weatherCity.visibility)+ meters")
             }
@@ -80,7 +78,7 @@ struct Param: View {
             HStack {
                 Image("water")
                     .resizable()
-                    .frame(width: 30, height: 30)
+                    .frame(width: Sizes.sizeSmallIcon, height: Sizes.sizeSmallIcon)
                     .foregroundColor(.gray)
                 Text("Humidity \(weatherCity.main.humidity)% &middot; Dewpoint \(Int(weatherCity.main.feels_like))&deg;")
                 Spacer()
@@ -89,14 +87,11 @@ struct Param: View {
             HStack {
                 Image("sunset")
                     .resizable()
-                    .frame(width: 30, height: 30)
+                    .frame(width: Sizes.sizeSmallIcon, height: Sizes.sizeSmallIcon)
                     
                 Text("Sunrise \(WeatherModel.getHourAndMinute(time: weatherCity.sys.sunrise)) → Sunset \(WeatherModel.getHourAndMinute(time: weatherCity.sys.sunset)). \(WeatherModel.getDayLight(weatherCity: weatherCity)) hours of daylight")
                 Spacer()
             }
-            .frame(width: 320)
-            
-            
             
             Spacer()
         }

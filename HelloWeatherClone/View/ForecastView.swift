@@ -17,7 +17,7 @@ struct Forecast: View {
                     
                 } label: {
                     Image("share")
-                        .frame(width: 10, height: 10)
+                        .frame(width: Sizes.sizeSmallImage, height: Sizes.sizeSmallImage)
                         .padding(.trailing)
                 }
             }
@@ -38,23 +38,22 @@ struct Forecast: View {
                         Text("Get real-time rainfall info!")
                         Text("Join the Hello Weather fan club →")
                     }
-                    .padding(5)
+                    .padding(Sizes.paddingSmall)
                 }
                 .frame(minWidth: 0, maxWidth: .infinity)
                 .buttonStyle(.bordered)
                 .background(.purple)
                 .foregroundColor(.white)
-                .cornerRadius(10)
+                .cornerRadius(Sizes.cornerRadius10)
                 
                 MorningView(weatherModel: weatherModel)
                 
                 VStack(alignment: .leading) {
                     Text("This week")
-                        .bold()
-                        .font(.title)
+                        .font(Fonts.titleTextForecast)
                     Text("Cloudy for the new few days, with a high of \(weatherModel.getHighTemp())&deg;")
                 }
-                .padding(.top, 40)
+                .padding(.top, Sizes.paddingBigTop)
                 
                 ThisWeekView(weatherModel: weatherModel)
                 
@@ -65,8 +64,8 @@ struct Forecast: View {
                 }
                 .padding()
                 .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.blue, lineWidth: 1)
+                    RoundedRectangle(cornerRadius: Sizes.cornerRadius10)
+                        .stroke(.blue, lineWidth: 1)
                 )
                 
                 Button {
@@ -76,7 +75,7 @@ struct Forecast: View {
                         .underline(true)
                 }
                 .padding(.top)
-                .padding(.bottom, 50)
+                .padding(.bottom, Sizes.paddingBigBottom)
             }
             .padding([.horizontal, .bottom])
         }

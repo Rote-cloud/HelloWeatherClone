@@ -7,8 +7,7 @@ struct MorningView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("This morning")
-                .bold()
-                .font(.title)
+                .font(Fonts.titleTextForecast)
             Text("Partly cloudy.")
             
             HStack(alignment: .bottom) {
@@ -17,7 +16,7 @@ struct MorningView: View {
                 }
                 
             }
-            .padding(.top, 40)
+            .padding(.top, Sizes.paddingBigTop)
         }
     }
 }
@@ -42,33 +41,32 @@ struct DiagramView: View {
         VStack {
             ZStack(alignment: .top) {
                 Rectangle()
-                    .frame(width: UIScreen.main.bounds.width / 10, height: 50 + (temp > 0 ? temp : 0))
+                    .frame(width: Sizes.sizeBaseHistogram, height: Sizes.sizeMinHistogram + (temp > 0 ? temp : 0))
                     .foregroundColor(.blue)
                     .clipShape(
-                        RoundCornerShape(rect: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width / 10, height: 50 + (temp > 0 ? temp : 0)), byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: 5, height: 5))
+                        RoundCornerShape(rect: CGRect(x: 0, y: 0, width: Sizes.sizeBaseHistogram, height: Sizes.sizeMinHistogram + (temp > 0 ? temp : 0)), byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: Sizes.cornerRadius5, height: Sizes.cornerRadius5))
                     )
                 VStack {
                     Text("\(Int(temp))&deg;")
                         .foregroundColor(.white)
-                        .bold()
-                        .font(.system(size: 14))
-                        .padding(.top, 5)
+                        .font(Fonts.subtitleText)
+                        .padding(.top, Sizes.paddingSmall)
                     Spacer()
                     Text("\(feels_like)&deg;")
-                        .font(.system(size: 12))
+                        .font(Fonts.sizeSmallText)
                         .foregroundColor(.white)
-                        .padding(.bottom, 5)
+                        .padding(.bottom, Sizes.paddingSmall)
                 }
             }
 
             Text("\(hour)")
-                .font(.system(size: 12))
+                .font(Fonts.sizeSmallText)
             Image("\(iconName)")
                 .resizable()
-                .frame(width: 35, height: 35)
+                .frame(width: Sizes.sizeBaseIcon, height: Sizes.sizeBaseIcon)
         }
         .padding(.horizontal, -1)
-        .frame(height: 50 + (temp > 0 ? temp : 0))
+        .frame(height: Sizes.sizeMinHistogram + (temp > 0 ? temp : 0))
     }
 }
 

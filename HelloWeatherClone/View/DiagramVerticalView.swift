@@ -24,60 +24,60 @@ struct DiagramVerticalView: View {
         HStack {
             ZStack(alignment: .trailing) {
                 Rectangle()
-                    .frame(width: badWeather > 0 ? CGFloat(85 + badWeather) : 0, height: UIScreen.main.bounds.width / 10)
+                    .frame(width: badWeather > 0 ? CGFloat(Sizes.sizeBadWeather + badWeather) : 0, height: Sizes.sizeBaseHistogram)
                     .foregroundColor(.blue)
                     .clipShape(
-                        RoundCornerShape(rect: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width / 10, height: (badWeather > 0 ? CGFloat(85 + badWeather) : 0)), byRoundingCorners: [.topLeft, .bottomLeft], cornerRadii: CGSize(width: 5, height: 5))
+                        RoundCornerShape(rect: CGRect(x: 0, y: 0, width: Sizes.sizeBaseHistogram, height: (badWeather > 0 ? CGFloat(Sizes.sizeBadWeather + badWeather) : 0)), byRoundingCorners: [.topLeft, .bottomLeft], cornerRadii: CGSize(width: Sizes.cornerRadius5, height: Sizes.cornerRadius5))
                     )
                 HStack {
                     if badWeather != 0 {
                         Text("\(badWeather)%")
                             .foregroundColor(.white)
-                            .bold()
-                            .padding(.leading, 5)
+                            .font(Fonts.boldText)
+                            .padding(.leading, Sizes.paddingSmall)
                     }
                     
                     Spacer()
                     
                     Image("\(iconName)")
                         .resizable()
-                        .frame(width: 35, height: 35)
+                        .frame(width: Sizes.sizeBaseIcon, height: Sizes.sizeBaseIcon)
                 }
             }
-            .frame(width: badWeather > 0 ? CGFloat(85 + badWeather) : 35)
+            .frame(width: badWeather > 0 ? CGFloat(Sizes.sizeBadWeather + badWeather) : Sizes.sizeBaseIcon)
             
             VStack(alignment: .center) {
                 Text("\(dayOfWeek)")
-                    .font(.system(size: 14))
+                    .font(Fonts.sizeMediumText)
                 Text("\(day)")
-                    .font(.system(size: 12))
+                    .font(Fonts.sizeSmallText)
                     .foregroundColor(.gray)
             }
             .padding(.horizontal)
             
             ZStack(alignment: .leading) {
                 Rectangle()
-                    .frame(width: 65 + (temp > 0 ? temp : 0), height: UIScreen.main.bounds.width / 10)
+                    .frame(width: Double(Sizes.sizeBadWeather) + (temp > 0 ? temp : 0), height: Sizes.sizeBaseHistogram)
                     .foregroundColor(.blue)
                     .clipShape(
-                        RoundCornerShape(rect: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width / 10, height: 65 + (temp > 0 ? temp : 0)), byRoundingCorners: [.bottomRight, .topRight], cornerRadii: CGSize(width: 5, height: 5))
+                        RoundCornerShape(rect: CGRect(x: 0, y: 0, width: Sizes.sizeBaseHistogram, height: Double(Sizes.sizeBadWeather) + (temp > 0 ? temp : 0)), byRoundingCorners: [.bottomRight, .topRight], cornerRadii: CGSize(width: Sizes.cornerRadius5, height: Sizes.cornerRadius5))
                     )
                 HStack {
                     Text("\(feels_like)&deg;")
                         .foregroundColor(.white)
-                        .frame(width: 40, height: UIScreen.main.bounds.width / 10)
+                        .font(Fonts.boldText)
+                        .frame(width: Sizes.sizeBaseHistogram, height: Sizes.sizeBaseHistogram)
                         .background(Color(red: 2 / 255, green: 140 / 255, blue: 1))
-                        .bold()
                     Spacer()
                     Text("\(Int(temp))&deg;")
                         .foregroundColor(.white)
-                        .bold()
-                        .padding(.trailing, 5)
+                        .font(Fonts.boldText)
+                        .padding(.trailing, Sizes.paddingSmall)
                 }
-                .frame(width: 65 + (temp > 0 ? temp : 0))
+                .frame(width: Double(Sizes.sizeBadWeather) + (temp > 0 ? temp : 0))
             }
         }
-        .position(x: UIScreen.main.bounds.width / 2 - (badWeather > 0 ? CGFloat(badWeather) : 0))
-        .frame(height: UIScreen.main.bounds.width / 10 - 4)
+        .position(x: Sizes.centerXPosition - (badWeather > 0 ? CGFloat(badWeather) : 0))
+        .frame(height: Sizes.sizeBaseHistogram - 4)
     }
 }

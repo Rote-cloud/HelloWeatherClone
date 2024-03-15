@@ -3,7 +3,7 @@ import SwiftUI
 struct ContentView: View {
     
     @StateObject private var tabSelection = TabSelection()
-    @StateObject var weatherModel = WeatherModel()
+    @StateObject private var weatherModel = WeatherModel()
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -30,7 +30,7 @@ struct ContentView: View {
             .environmentObject(tabSelection)
 
             Divider()
-                .padding(.bottom, 65)
+                .padding(.bottom, Sizes.paddingBottomDivider)
         }
     }
 }

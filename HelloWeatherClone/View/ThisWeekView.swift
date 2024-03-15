@@ -27,7 +27,7 @@ struct ThisWeekView: View {
                 }
                 .padding(.top)
             }
-            .frame(height: 230)
+            .frame(height: Sizes.thisWeekHeight)
             .tabViewStyle(.page)
             .indexViewStyle(.page(backgroundDisplayMode: .always))
         }
@@ -54,16 +54,16 @@ struct DiagramVerticalInfo: View {
         HStack {
             VStack(alignment: .center) {
                 Text("\(dayOfWeek)")
-                    .font(.system(size: 14))
+                    .font(Fonts.sizeMediumText)
                 Text("\(day)")
-                    .font(.system(size: 12))
+                    .font(Fonts.sizeMediumText)
                     .foregroundColor(.gray)
             }
             .padding(.horizontal)
             
             Image("\(iconName)")
                 .resizable()
-                .frame(width: 35, height: 35)
+                .frame(width: Sizes.sizeBaseIcon, height: Sizes.sizeBaseIcon)
             
             Text("\(iconName.capitalized). \(speed)mph winds.")
         }
