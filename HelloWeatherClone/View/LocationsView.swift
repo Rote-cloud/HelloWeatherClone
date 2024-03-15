@@ -1,17 +1,14 @@
 import SwiftUI
 
-struct LocationInfo: Identifiable {
-    var id = UUID()
-    var imageNmae = "text.justify"
-    var text: String
-    var image2: String?
-}
-
 struct LocationsView: View {
     
     @StateObject var weatherModel: WeatherModel
     
-    @State private var location = [LocationInfo(imageNmae: "target", text: "Your current location"),
+    @State private var showModal = false
+    @State private var searchValue = ""
+    @State private var isCityBool = false
+    
+    @State private var location = [LocationInfo(imageName: "target", text: "Your current location"),
     LocationInfo(text: "New York, New York", image2: "xmark"),
     LocationInfo(text: "Chicago", image2: "xmark"),
     LocationInfo(text: "Moscow", image2: "xmark")]
@@ -26,11 +23,46 @@ struct LocationsView: View {
                 Spacer()
                 
                 Button {
-                    
+                    showModal = true
+                    searchValue = ""
                 } label: {
                     Image(systemName: "plus")                        .foregroundColor(.black)
                 }
-            } 
+                .sheet(isPresented: $showModal, onDismiss: {
+                        }) {
+                            VStack {
+                                HStack {
+                                    Button {
+                                        showModal = false
+                                        isCityBool = false
+                                    } label: {
+                                        Image(systemName: "chevron.left")
+                                            .imageScale(.large)
+                                    }
+                                    TextField("Введите город", text: $searchValue)
+                                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                                        .padding()
+                                            
+                                    Button(action: {
+                                        showModal = false
+                                        WeatherModel.getSearchCity(city: searchValue, isCity: {isCity in
+                                            WeatherModel.getSearchCity(city: searchValue, isCity: {isCity in
+                                                if isCity == true {
+                                                    location.append(LocationInfo(text: searchValue, image2: "xmark"))
+                                                }
+                                            })
+                                        })
+                                    }) {
+                                        Text("Готово")
+                                    }
+                                    .padding()
+                                            
+                                }
+                                Spacer()
+                            }
+
+                        }
+            }
             .padding(.horizontal)
             .padding(.bottom, 5)
             
@@ -76,7 +108,7 @@ struct Location: View {
                 weatherModel.setCity(city: location.text)
             } label: {
                 HStack {
-                    Image(systemName: location.imageNmae)
+                    Image(systemName: location.imageName)
                         .font(.system(size: 20))
                         .foregroundColor(.black)
                     Text(location.text)

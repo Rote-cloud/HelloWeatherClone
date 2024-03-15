@@ -128,6 +128,21 @@ final class WeatherModel: ObservableObject {
         return 0
     }
     
+    static func getSearchCity(city: String, isCity: @escaping (Bool) -> Void) {
+        let geoCoder = CLGeocoder()
+        
+        geoCoder.geocodeAddressString(city) { (placemarks, error) in
+            var cityBool = false
+            
+            if error == nil {
+                if let places = placemarks?.first, let _ = places.locality ?? places.administrativeArea {
+                    cityBool = true
+                }
+            }
+            isCity(cityBool)
+        }
+    }
+    
     static func getBadWeatherPercent(weather: Weather) -> Int {
         if let snow = weather.snow?.values.first {
             return Int(snow * 100)

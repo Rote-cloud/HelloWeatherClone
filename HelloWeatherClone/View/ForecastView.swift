@@ -2,7 +2,7 @@ import SwiftUI
 
 struct Forecast: View {
     
-    @StateObject var weatherModel: WeatherModel = WeatherModel()
+    @StateObject var weatherModel: WeatherModel
         
     var body: some View {
         VStack(alignment: .leading) {
@@ -84,5 +84,5 @@ struct Forecast: View {
 }
 
 #Preview {
-    Forecast()
+    Forecast(weatherModel: WeatherModel())
 }
