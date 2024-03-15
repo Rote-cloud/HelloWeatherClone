@@ -59,8 +59,8 @@ struct DiagramVerticalInfo: View {
                     .font(Fonts.sizeMediumText)
                     .foregroundColor(.gray)
             }
-            .padding(.horizontal)
-            
+            .frame(width: Sizes.sizeTextDiagramInfo)
+
             Image("\(iconName)")
                 .resizable()
                 .frame(width: Sizes.sizeBaseIcon, height: Sizes.sizeBaseIcon)

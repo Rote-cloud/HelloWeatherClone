@@ -21,4 +21,6 @@ struct Sizes {
     static let centerXPosition = UIScreen.main.bounds.width / 2
     static let paddingBottomDivider = CGFloat(65)
     static let sizeIconSettings = CGFloat(30)
+    static let sizeTextDiagramDay = CGFloat(70)
+    static let sizeTextDiagramInfo = CGFloat(40)
 }

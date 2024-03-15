@@ -53,7 +53,7 @@ struct DiagramVerticalView: View {
                     .font(Fonts.sizeSmallText)
                     .foregroundColor(.gray)
             }
-            .padding(.horizontal)
+            .frame(width: Sizes.sizeTextDiagramDay)
             
             ZStack(alignment: .leading) {
                 Rectangle()
