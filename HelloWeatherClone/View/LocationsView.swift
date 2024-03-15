@@ -47,6 +47,7 @@ struct LocationsView: View {
                                         showModal = false
                                         WeatherModel.getSearchCity(city: searchValue, isCity: {isCity in
                                             WeatherModel.getSearchCity(city: searchValue, isCity: {isCity in
+                                                isCityBool = !isCity
                                                 if isCity == true {
                                                     location.append(LocationInfo(text: searchValue, image2: "xmark"))
                                                 }
@@ -80,6 +81,9 @@ struct LocationsView: View {
             .navigationTitle("Locations")
             .padding([.bottom, .horizontal])
         }
+        .alert(isPresented: $isCityBool) {
+            Alert(title: Text("Could not find city"), dismissButton: .default(Text("OK")))
+        }
     }
     
     private func deleteLoc(_ loc: LocationInfo) {
@@ -98,6 +102,8 @@ struct LocationsView: View {
 
 struct Location: View {
     
+    @EnvironmentObject var tabSelection: TabSelection
+    
     let weatherModel: WeatherModel
     let location: LocationInfo
     let onDelete: () -> Void
@@ -106,6 +112,7 @@ struct Location: View {
         HStack {
             Button {
                 weatherModel.setCity(city: location.text)
+                tabSelection.selectedTabIndex = 1
             } label: {
                 HStack {
                     Image(systemName: location.imageName)
